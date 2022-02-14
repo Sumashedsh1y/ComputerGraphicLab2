@@ -1,6 +1,7 @@
-﻿#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+
 using namespace std;
 using namespace sf;
 
@@ -17,10 +18,20 @@ int main()
 	RenderWindow window(sf::VideoMode(1000, 1000), "BEZIE");
 	Event event;
 
+	Image heroimage;
+	heroimage.loadFromFile("morgen.png");
+
+	Texture herotexture;
+	herotexture.loadFromImage(heroimage);
+
+	Sprite herosprite;
+	herosprite.setTexture(herotexture);
+	herosprite.setPosition(0, 0);
+
 	while (window.isOpen())
 	{
 		window.clear();
-
+		window.draw(herosprite);
 		while (window.pollEvent(event)) 
 		{
 			mousePos = Mouse::getPosition(window);
@@ -75,11 +86,11 @@ int main()
 							curve.vertices[j + 1][k].position.y = curve.vertices[j][k].position.y + (curve.vertices[j][k + 1].position.y - curve.vertices[j][k].position.y) * i;
 						}
 					}
-					window.draw(&curve.vertices[curve.vertices.size() - 1][0], 1, Points);
+					curve.vertices[curve.vertices.size() - 1][0].color = Color::Red;
+					window.draw(&curve.vertices[curve.vertices.size() - 1][0], 10, Points);
 				}
 			}
 		}
-
 		window.display();
 	}
 
